@@ -2,6 +2,8 @@
 
 A TurboWarp extension that provides Live2D-style image transformation and deformation effects using mesh-based transformations and quadrilateral mapping.
 
+> 📚 **Documentation**: [Quick Start](QUICKSTART.md) | [Examples](EXAMPLES.md) | [Contributing](CONTRIBUTING.md) | [Architecture](ARCHITECTURE.md) | [日本語](README.ja.md)
+
 ## Features
 
 ### 🎨 Image Transformation Capabilities
