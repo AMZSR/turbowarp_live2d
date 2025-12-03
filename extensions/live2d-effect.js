@@ -40,7 +40,7 @@
     getInfo() {
       return {
         id: 'live2deffect',
-        name: 'Live2D Effect',
+        name: 'Live2D エフェクト',
         color1: '#FF6680',
         color2: '#FF4D6A',
         color3: '#E63F5F',
@@ -48,7 +48,7 @@
           {
             opcode: 'loadImageFromCostume',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'load image from costume [COSTUME]',
+            text: 'コスチューム [COSTUME] から画像を読み込む',
             arguments: {
               COSTUME: {
                 type: Scratch.ArgumentType.COSTUME
@@ -58,7 +58,7 @@
           {
             opcode: 'loadImageFromURL',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'load image from URL [URL]',
+            text: 'URL [URL] から画像を読み込む',
             arguments: {
               URL: {
                 type: Scratch.ArgumentType.STRING,
@@ -70,7 +70,7 @@
           {
             opcode: 'setVertexPosition',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'set vertex [VERTEX] to x: [X] y: [Y]',
+            text: '頂点 [VERTEX] を x: [X] y: [Y] に設定',
             arguments: {
               VERTEX: {
                 type: Scratch.ArgumentType.STRING,
@@ -89,7 +89,7 @@
           {
             opcode: 'getVertexX',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'vertex [VERTEX] x',
+            text: '頂点 [VERTEX] の x',
             arguments: {
               VERTEX: {
                 type: Scratch.ArgumentType.STRING,
@@ -100,7 +100,7 @@
           {
             opcode: 'getVertexY',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'vertex [VERTEX] y',
+            text: '頂点 [VERTEX] の y',
             arguments: {
               VERTEX: {
                 type: Scratch.ArgumentType.STRING,
@@ -112,7 +112,7 @@
           {
             opcode: 'applyPreset',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'apply [PRESET] transform strength: [STRENGTH]%',
+            text: '[PRESET] 変形を適用 強さ: [STRENGTH]%',
             arguments: {
               PRESET: {
                 type: Scratch.ArgumentType.STRING,
@@ -128,7 +128,7 @@
           {
             opcode: 'drawTransformed',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'draw transformed image at x: [X] y: [Y]',
+            text: '変形した画像を x: [X] y: [Y] に描画',
             arguments: {
               X: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -143,7 +143,7 @@
           {
             opcode: 'drawTransformedWithSize',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'draw transformed image at x: [X] y: [Y] width: [WIDTH] height: [HEIGHT]',
+            text: '変形した画像を x: [X] y: [Y] 幅: [WIDTH] 高さ: [HEIGHT] に描画',
             arguments: {
               X: {
                 type: Scratch.ArgumentType.NUMBER,
@@ -167,42 +167,42 @@
           {
             opcode: 'resetTransform',
             blockType: Scratch.BlockType.COMMAND,
-            text: 'reset all transformations'
+            text: 'すべての変形をリセット'
           },
           '---',
           {
             opcode: 'getImageWidth',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'image width'
+            text: '画像の幅'
           },
           {
             opcode: 'getImageHeight',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'image height'
+            text: '画像の高さ'
           },
           {
             opcode: 'getTransformedDataURL',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'transformed image data URL'
+            text: '変形した画像のデータURL'
           }
         ],
         menus: {
           vertexMenu: {
             acceptReporters: true,
             items: [
-              { text: 'Top Left', value: 'topleft' },
-              { text: 'Top Right', value: 'topright' },
-              { text: 'Bottom Left', value: 'bottomleft' },
-              { text: 'Bottom Right', value: 'bottomright' }
+              { text: '左上', value: 'topleft' },
+              { text: '右上', value: 'topright' },
+              { text: '左下', value: 'bottomleft' },
+              { text: '右下', value: 'bottomright' }
             ]
           },
           presetMenu: {
             acceptReporters: true,
             items: [
-              { text: 'Trapezoid', value: 'trapezoid' },
-              { text: 'Perspective', value: 'perspective' },
-              { text: 'Wave', value: 'wave' },
-              { text: 'Bulge', value: 'bulge' }
+              { text: '台形', value: 'trapezoid' },
+              { text: '遠近法', value: 'perspective' },
+              { text: '波', value: 'wave' },
+              { text: '膨張', value: 'bulge' }
             ]
           }
         }
