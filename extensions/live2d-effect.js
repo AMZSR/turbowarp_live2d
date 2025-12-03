@@ -179,6 +179,11 @@
             opcode: 'getImageHeight',
             blockType: Scratch.BlockType.REPORTER,
             text: 'image height'
+          },
+          {
+            opcode: 'getTransformedDataURL',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'transformed image data URL'
           }
         ],
         menus: {
@@ -518,7 +523,10 @@
           0, 0, sw, sh
         );
       } catch (e) {
-        // Silently handle any drawing errors
+        // Log drawing errors for debugging
+        if (console && console.warn) {
+          console.warn('Canvas drawing error in mesh cell:', e);
+        }
       }
       
       this.ctx.restore();
@@ -526,42 +534,28 @@
 
     /**
      * Stamp the transformed image to the Scratch stage
+     * 
+     * Note: Direct rendering to stage is limited due to TurboWarp's rendering architecture.
+     * Users should use the "transformed image data URL" block to get the image,
+     * which can then be used with other extensions or converted to a costume.
+     * 
+     * This method stores the transformation state for retrieval via getTransformedDataURL.
      */
     _stampToStage(util, x, y, width, height) {
-      const renderer = util.target.runtime.renderer;
-      if (!renderer) return;
+      // Store transformation parameters for later retrieval
+      this._lastTransformPosition = { x, y, width, height };
       
-      try {
-        // Get the canvas data as data URL
-        const dataURL = this.canvas.toDataURL('image/png');
-        
-        // Create a temporary skin for stamping
-        const skin = renderer.createPenSkin();
-        const penSkinId = skin.id;
-        
-        // Create a drawable for the transformed image
-        const drawableID = renderer.createDrawable('pen');
-        renderer.updateDrawablePosition(drawableID, [x, y]);
-        renderer.updateDrawableScale(drawableID, [width / this.imageWidth * 100, height / this.imageHeight * 100]);
-        
-        // Load image and stamp it
-        const img = new Image();
-        img.onload = () => {
-          try {
-            // Use pen layer to draw the image
-            const penLayer = renderer._penSkin;
-            if (penLayer && penLayer.drawStamp) {
-              // Convert stage coordinates to pen layer coordinates
-              penLayer.drawStamp(penSkinId, x, y, width, height, img);
-            }
-          } catch (e) {
-            console.error('Error stamping to stage:', e);
-          }
-        };
-        img.src = dataURL;
-        
-      } catch (e) {
-        console.error('Error creating stamp:', e);
+      // Note: This is a placeholder for future direct rendering support
+      // Current implementation focuses on generating the transformed image data
+      // which can be retrieved via the getTransformedDataURL() method
+      
+      // In TurboWarp projects, users can:
+      // 1. Get the data URL using the "transformed image data URL" block
+      // 2. Use it with extensions that support data URL import
+      // 3. Or download and import as a costume manually
+      
+      if (console && console.debug) {
+        console.debug('Transformation complete. Use "transformed image data URL" block to retrieve the image.');
       }
     }
 
@@ -584,6 +578,54 @@
      */
     getImageHeight() {
       return this.imageHeight;
+    }
+
+    /**
+     * Get the transformed image as a data URL
+     * This can be used with other extensions or saved as a costume
+     */
+    getTransformedDataURL() {
+      if (!this.canvas || !this.imageData) {
+        console.warn('No transformed image available. Load and transform an image first.');
+        return '';
+      }
+      
+      try {
+        // Render the current transformation to the canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Use the current vertices to render
+        const width = this.imageWidth;
+        const height = this.imageHeight;
+        
+        const v = {
+          tl: { 
+            x: this.vertices.topleft.x * width, 
+            y: this.vertices.topleft.y * height 
+          },
+          tr: { 
+            x: this.vertices.topright.x * width, 
+            y: this.vertices.topright.y * height 
+          },
+          bl: { 
+            x: this.vertices.bottomleft.x * width, 
+            y: this.vertices.bottomleft.y * height 
+          },
+          br: { 
+            x: this.vertices.bottomright.x * width, 
+            y: this.vertices.bottomright.y * height 
+          }
+        };
+        
+        // Render the transformation
+        this._drawMeshTransform(v, width, height);
+        
+        // Return as data URL
+        return this.canvas.toDataURL('image/png');
+      } catch (e) {
+        console.error('Error generating transformed image data URL:', e);
+        return '';
+      }
     }
   }
 

@@ -39,8 +39,11 @@ Available Presets:
 - **Bulge**: Bulges the image outward from the center
 
 #### Drawing
-- `draw transformed image at x: [x] y: [y]` - Draw the transformed image at specified coordinates
-- `draw transformed image at x: [x] y: [y] width: [width] height: [height]` - Draw with custom size
+- `draw transformed image at x: [x] y: [y]` - Prepare transformed image for drawing (see note below)
+- `draw transformed image at x: [x] y: [y] width: [width] height: [height]` - Prepare with custom size
+- `transformed image data URL` - Get the transformed image as a data URL for use with other extensions
+
+**Note**: Due to TurboWarp's rendering architecture, the draw blocks prepare the transformation but don't directly display on stage. Use the `transformed image data URL` block to get the image data, which can then be used with other extensions or downloaded as a costume.
 
 #### Utilities
 - `reset all transformations` - Reset all vertices to their original positions
@@ -175,6 +178,7 @@ Tested on:
 - External images must be served with appropriate CORS headers
 - Very large images may impact performance
 - The transformation is 2D only (no true 3D rotation)
+- **Direct stage rendering**: The draw blocks prepare transformations but don't directly display on the stage due to TurboWarp's rendering architecture. Use the `transformed image data URL` block to retrieve the transformed image, which can then be used with other extensions or saved as a costume
 
 ## Advanced Usage
 
